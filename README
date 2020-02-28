@@ -1,0 +1,12 @@
+Requirements:
+
+* Java 1.7+
+* Maven
+
+Compile:
+
+mvn compile
+
+Execute:
+
+mvn exec:java -Dexec.mainClass="com.paul.App" -Dexec.args="../ss4.pdf"
