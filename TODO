@@ -1,3 +1,3 @@
 [ ] Handle more field types
 [ ] Sort by field names before printing
-[ ] Show text values next to checkboxes
+[X] Show text values next to checkboxes -- this would be extremely difficult. The text shown above text fields are not close to the text fields in the object hierarchy; they are defined in a separate stream object under the page object, and are specified by page location coordinates (in page-space? Something like pixel offsets -- see Text Positioning Operators on page 406 of the reference). To couple the helper text for a given text field with the field itself, the only way I can see to do it is to examine the position on the page of all elements and find the closest helper text to a given text field, which seems inconsistent.

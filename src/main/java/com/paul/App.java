@@ -8,10 +8,6 @@ import com.lowagie.text.pdf.PdfDictionary;
 import com.lowagie.text.pdf.*;
 import java.util.*;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args ) throws Exception
@@ -34,34 +30,12 @@ public class App
             Set<PdfName> validFieldValues = new HashSet<>();
             for (int i = 0; i < size; i++) {
                 PdfDictionary fieldDict = fieldContents.getValue(i);
-                //System.out.println("Value #" + i);
-                //System.out.println(fieldDict);
                 for (PdfName dictKey : fieldDict.getKeys()) {
-                    //System.out.println("Key in value " + i + ": " + dictKey);
                     if (dictKey.equals(PdfName.FT)) {
                         PdfObject dictVal = fieldDict.get(dictKey);
-                        //System.out.println("Field type FT: " + dictVal);
                         fieldType = dictVal.toString();
                     }
-                    /*
-                    if (dictKey.equals(PdfName.OPT)) {
-                        PdfArray arrayVal = fieldDict.getAsArray(dictKey);
-                        int arraySize = arrayVal.size();
-                        System.out.println("Opt values");
-                        for (int j = 0; j < arraySize; j++) {
-                            PdfString stringNestedVal = arrayVal.getAsString(j);
-                            System.out.println("Nested val: " + stringNestedVal);
-                        }
-                    }
-                    if (dictKey.equals(PdfName.FF)) {
-                        PdfNumber dictValue = fieldDict.getAsNumber(dictKey);
-                        int dictValueInt = dictValue.intValue();
-                        //System.out.println("Bit vector: " + Integer.toBinaryString(dictValueInt));
-                    }
-                    */
                     if (dictKey.equals(PdfName.AP)) {
-                        //System.out.println("AP Value");
-                        //printPdfObject(fieldDict.get(dictKey));
                         // Top-level dictionaries (Table 8.19, page 614)
                         PdfDictionary apTopLevel = fieldDict.getAsDict(dictKey);
                         for (PdfName apKey : apTopLevel.getKeys()) {
@@ -76,7 +50,6 @@ public class App
             if (!validFieldValues.isEmpty()) {
                 System.out.println("Valid field values: " + validFieldValues);
             }
-            //return;
         }
     }
 
@@ -103,6 +76,7 @@ public class App
             }
         } else {
             printIndent(ind);
+            System.out.print("Type " + obj.type() + " ");
             System.out.println(obj);
         }
     }
@@ -112,4 +86,5 @@ public class App
             System.out.print(" ");
         }
     }
+
 }
