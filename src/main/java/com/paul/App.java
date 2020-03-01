@@ -22,9 +22,12 @@ public class App
         PdfReader pdfReader = new PdfReader(inputFileName);
         AcroFields form = pdfReader.getAcroFields();
         Map<String, AcroFields.Item> allFields = form.getAllFields();
-        for (Map.Entry<String, AcroFields.Item> field : allFields.entrySet()) {
-            String fieldName = field.getKey();
-            AcroFields.Item fieldContents = field.getValue();
+        // Sort the fields by name for nicer output
+        List<String> fieldNames = new ArrayList<>(allFields.size());
+        fieldNames.addAll(allFields.keySet());
+        fieldNames.sort((s1, s2) -> s1.compareTo(s2));
+        for (String fieldName : fieldNames) {
+            AcroFields.Item fieldContents = allFields.get(fieldName);
             int size = fieldContents.size();
             String fieldType = "Unknown";
             Set<PdfName> validFieldValues = new HashSet<>();
@@ -40,7 +43,9 @@ public class App
                         PdfDictionary apTopLevel = fieldDict.getAsDict(dictKey);
                         for (PdfName apKey : apTopLevel.getKeys()) {
                             PdfDictionary appearanceDict = apTopLevel.getAsDict(apKey);
-                            validFieldValues.addAll(appearanceDict.getKeys());
+                            if (appearanceDict != null) {
+                                validFieldValues.addAll(appearanceDict.getKeys());
+                            }
                         }
                     }
                 }
